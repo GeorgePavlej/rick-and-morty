@@ -1,6 +1,7 @@
 from random import choice
 
 from django.db.models import QuerySet
+from django.http import HttpRequest, HttpResponse
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
@@ -50,6 +51,6 @@ class CharacterListView(generics.ListAPIView):
             ),
         ],
     )
-    def get(self, request):
+    def get(self, request: HttpRequest) -> HttpResponse:
         """Filter characters by name"""
         return super().get(request)
