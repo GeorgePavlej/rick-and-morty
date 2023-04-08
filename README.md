@@ -1,4 +1,5 @@
 # rick-and-morty
+### API for getting a random character from Rick and Morty world.
 
 ### How to run:
 
