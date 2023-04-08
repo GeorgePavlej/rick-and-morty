@@ -43,7 +43,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "celery -A rick_and_morty_api beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             celery -A rick_and_morty_api beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
     depends_on:
       - web
       - db
@@ -52,16 +54,16 @@ services:
     env_file:
       - .env
 
-  flower:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "5555:5555"
-    command: "celery -A rick_and_morty_api flower --address=0.0.0.0"
-    volumes:
-      - .:/code
-    env_file:
-      - .env
-    depends_on:
-      - celery
+#  flower:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5555:5555"
+#    command: "celery -A rick_and_morty_api flower --address=0.0.0.0"
+#    volumes:
+#      - .:/code
+#    env_file:
+#      - .env
+#    depends_on:
+#      - celery
